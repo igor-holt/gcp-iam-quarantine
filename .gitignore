@@ -1,0 +1,42 @@
+# Terraform state — contains secrets and resource metadata. Never commit.
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+
+# Variable files — may contain the Slack webhook or other secrets.
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+
+# Real environment files. Only the example is tracked.
+.env
+.env.*
+!.env.example
+
+# Service account key material — never commit, never check in.
+*.pem
+*service-account*.json
+gcp-key*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Build artifacts
+*.zip
+dist/
+build/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

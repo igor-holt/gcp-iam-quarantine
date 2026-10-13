@@ -1,0 +1,26 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored —
+# never commit real values.
+
+project_id = "your-gcp-project-id"
+region     = "us-central1"
+
+# Service accounts that are never auto-quarantined, beyond the four
+# control-plane SAs this module creates itself.
+#
+# Values must be bare email addresses, no quotes inside the string, and must
+# live in the same project as project_id. Entries that fail validation are
+# rejected at plan time rather than silently failing to protect an account.
+additional_protected_service_accounts = [
+  # "some-team-sa@your-gcp-project-id.iam.gserviceaccount.com",
+]
+
+# Service accounts eligible for automated quarantine.
+#
+# THIS IS THE BLAST-RADIUS CONTROL. Remediation only ever touches an account
+# in this list, so a forged alert cannot disable an arbitrary principal.
+# Leave it empty to disable auto-remediation entirely (alert-only mode).
+quarantine_target_service_accounts = [
+  # "workload-sa@your-gcp-project-id.iam.gserviceaccount.com",
+]
+
+alert_topic_name = "security-anomaly-alerts"

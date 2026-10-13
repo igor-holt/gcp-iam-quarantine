@@ -40,3 +40,6 @@ build/
 .DS_Store
 .idea/
 .vscode/
+
+# Local pipeline/directive logs — deployment harness artifacts, not source.
+a2a_*.jsonl

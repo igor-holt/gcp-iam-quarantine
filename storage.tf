@@ -26,5 +26,5 @@ resource "google_storage_bucket_object" "dispatcher_archive" {
   # what makes Cloud Functions pick up a new revision.
   name           = "dispatcher-${data.archive_file.dispatcher_source.output_base64sha256}.zip"
   source         = data.archive_file.dispatcher_source.output_path
-  detect_md5hash = filemd5(data.archive_file.dispatcher_source.output_path)
+  source_md5hash = filemd5(data.archive_file.dispatcher_source.output_path)
 }

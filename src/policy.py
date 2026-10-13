@@ -121,6 +121,21 @@ def assert_dispatcher_not_monitored(
         )
 
 
+def assert_remediation_configured(
+    require_remediation: bool, monitored_sas: set[str]
+) -> None:
+    """Fail closed if remediation is required but no target SAs are configured.
+
+    Guards against an accidental configuration wipe or missing variable from
+    silently downgrading an active remediation deployment into alert-only mode.
+    """
+    if require_remediation and not monitored_sas:
+        raise RuntimeError(
+            "Refusing to start: require_remediation is True, but QUARANTINE_TARGET_SAS "
+            "is empty. Populate QUARANTINE_TARGET_SAS or set REQUIRE_REMEDIATION=false."
+        )
+
+
 def decode_pubsub_data(cloud_event_data: object) -> tuple[dict | None, str]:
     """Decode a Pub/Sub CloudEvent payload into a dict.
 

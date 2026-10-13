@@ -63,6 +63,7 @@ resource "google_cloudfunctions2_function" "slack_alert_dispatcher" {
       GCP_PROJECT_ID             = var.project_id
       PROTECTED_SERVICE_ACCOUNTS = local.protected_sa_csv
       QUARANTINE_TARGET_SAS      = local.quarantine_target_sa_csv
+      REQUIRE_REMEDIATION        = tostring(var.require_remediation)
       PUBSUB_EXPECTED_SOURCE     = "//pubsub.googleapis.com/projects/${var.project_id}/topics/${google_pubsub_topic.security_alerts.name}"
     }
 

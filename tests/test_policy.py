@@ -141,6 +141,21 @@ class TestSelfProtection:
         )
 
 
+class TestRequireRemediation:
+    def test_remediation_required_with_empty_allowlist_raises(self):
+        with pytest.raises(RuntimeError, match="require_remediation is True, but QUARANTINE_TARGET_SAS is empty"):
+            policy.assert_remediation_configured(True, set())
+
+    def test_remediation_required_with_targets_passes(self):
+        policy.assert_remediation_configured(True, MONITORED)
+
+    def test_remediation_not_required_with_empty_allowlist_passes(self):
+        policy.assert_remediation_configured(False, set())
+
+    def test_remediation_not_required_with_targets_passes(self):
+        policy.assert_remediation_configured(False, MONITORED)
+
+
 class TestDecodePubsubData:
     def _event(self, data):
         return {"message": {"data": base64.b64encode(data).decode()}}

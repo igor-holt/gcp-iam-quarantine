@@ -36,5 +36,10 @@ resource "terraform_data" "sa_set_safety" {
 
       error_message = "quarantine_target_service_accounts contains duplicate entries."
     }
+
+    precondition {
+      condition     = !var.require_remediation || length(var.quarantine_target_service_accounts) > 0
+      error_message = "require_remediation is true, but quarantine_target_service_accounts is empty. Populate quarantine_target_service_accounts or set require_remediation = false."
+    }
   }
 }

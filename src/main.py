@@ -65,6 +65,13 @@ def dispatch_slack_alert(cloud_event: CloudEvent) -> None:
         os.environ.get("SERVICE_ACCOUNT_EMAIL", ""), monitored_sas, protected_sas
     )
 
+    # Fail closed if remediation is marked required but allowlist is empty.
+    require_remediation = (
+        os.environ.get("REQUIRE_REMEDIATION", "").strip().lower()
+        in ("true", "1", "yes")
+    )
+    policy.assert_remediation_configured(require_remediation, monitored_sas)
+
     # Reject replays of a message from any topic other than our own. Combined
     # with topic-level publisher IAM this narrows forgery to the scanner SA.
     source = cloud_event.get("source", "")

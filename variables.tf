@@ -41,6 +41,12 @@ variable "quarantine_target_service_accounts" {
   }
 }
 
+variable "require_remediation" {
+  type        = bool
+  description = "When true, quarantine_target_service_accounts must contain at least one service account; fails plan if empty."
+  default     = false
+}
+
 # The protected/quarantine-target overlap check cannot live in a `validation`
 # block here: Terraform 1.5 forbids referencing another variable from inside
 # one. It is a precondition in checks.tf instead.
